@@ -2,8 +2,8 @@ import logging
 from PIL import Image
 from .epdconfig import RaspberryPi
 
-WIDTH  = 600
-HEIGHT = 400
+WIDTH  = 400
+HEIGHT = 600
 
 logger = logging.getLogger(__name__)
 
@@ -114,10 +114,10 @@ class Screen:
         self._cmd(0x60)
         self._data(0x02); self._data(0x00)
 
-        # Panel resolution: 600 x 400
+        # Panel resolution: 400 x 600
         self._cmd(0x61)
-        self._data(0x02); self._data(0x58)  # 0x0258 = 600
         self._data(0x01); self._data(0x90)  # 0x0190 = 400
+        self._data(0x02); self._data(0x58)  # 0x0258 = 600
 
         self._cmd(0x84)
         self._data(0x01)
