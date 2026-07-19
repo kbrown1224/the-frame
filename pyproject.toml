@@ -7,4 +7,5 @@ dependencies = [
     "pillow>=10.0.0",
     "spidev; sys_platform == 'linux'",
     "gpiozero; sys_platform == 'linux'",
+    "lgpio; sys_platform == 'linux'",
 ]
