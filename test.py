@@ -1,13 +1,20 @@
-from PIL import Image, ImageDraw
+from PIL import Image
+from image_converter import prepare_image
 from waveshare_epd.screen import Screen
+import tempfile, os
 
-screen = Screen()
-screen.init()
+IMG_PATH = "input_images/fam_at_pond.png"
 
-img = Image.new("RGB", (600, 400), "white")
-draw = ImageDraw.Draw(img)
-draw.rectangle([20, 20, 580, 380], outline="black", width=4)
-draw.text((260, 185), "it works", fill="black")
+with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp:
+    tmp_path = tmp.name
 
-screen.display(screen.getbuffer(img))
-screen.sleep()
+try:
+    prepare_image(IMG_PATH, tmp_path)
+    img = Image.open(tmp_path)
+
+    screen = Screen()
+    screen.init()
+    screen.display(screen.getbuffer(img))
+    screen.sleep()
+finally:
+    os.unlink(tmp_path)
