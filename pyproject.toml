@@ -1,0 +1,10 @@
+[project]
+name = "the-frame"
+version = "0.1.0"
+description = "E-ink photo frame for Waveshare Spectra 6 E6 display"
+requires-python = ">=3.11"
+dependencies = [
+    "pillow>=10.0.0",
+    "spidev; sys_platform == 'linux'",
+    "gpiozero; sys_platform == 'linux'",
+]
