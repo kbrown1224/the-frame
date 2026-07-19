@@ -4,10 +4,10 @@ from waveshare_epd.screen import Screen
 screen = Screen()
 screen.init()
 
-img = Image.new("RGB", (400, 600), "white")
+img = Image.new("RGB", (600, 400), "white")
 draw = ImageDraw.Draw(img)
-draw.rectangle([20, 20, 380, 580], outline="black", width=4)
-draw.text((160, 285), "it works", fill="black")
+draw.rectangle([20, 20, 580, 380], outline="black", width=4)
+draw.text((260, 185), "it works", fill="black")
 
 screen.display(screen.getbuffer(img))
 screen.sleep()

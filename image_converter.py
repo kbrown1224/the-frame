@@ -1,8 +1,8 @@
 import os
 from PIL import Image, ImageEnhance, ImageOps
 
-DISPLAY_WIDTH = 400
-DISPLAY_HEIGHT = 600
+DISPLAY_WIDTH = 600
+DISPLAY_HEIGHT = 400
 
 VALID_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff')
 
