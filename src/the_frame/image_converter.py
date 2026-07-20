@@ -1,21 +1,23 @@
-import os
+from pathlib import Path
+
 from PIL import Image, ImageEnhance, ImageOps
 
 DISPLAY_WIDTH = 600
 DISPLAY_HEIGHT = 400
-
-VALID_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff')
+SATURATION_BOOST = 1.5
+CONTRAST_BOOST = 1.5
+VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff"}
 
 
 def process_images(source_dir, output_dir):
-    for filename in os.listdir(source_dir):
-        if filename.startswith('.'):
+    source_dir = Path(source_dir)
+    output_dir = Path(output_dir)
+    for path in sorted(source_dir.iterdir()):
+        if path.name.startswith("."):
             continue
-
-        filepath = os.path.join(source_dir, filename)
-        if os.path.isfile(filepath) and filename.lower().endswith(VALID_EXTENSIONS):
-            print(f"Processing: {filename}")
-            prepare_image(filepath, os.path.join(output_dir, filename))
+        if path.is_file() and path.suffix.lower() in VALID_EXTENSIONS:
+            print(f"Processing: {path.name}")
+            prepare_image(path, output_dir / path.name)
 
 
 def prepare_image(img_path, out_path):
@@ -38,16 +40,12 @@ def prepare_image(img_path, out_path):
         top = (new_height - DISPLAY_HEIGHT) // 2
         cropped = resized.crop((left, top, left + DISPLAY_WIDTH, top + DISPLAY_HEIGHT))
 
-        cropped = ImageEnhance.Color(cropped).enhance(1.5)
-        cropped = ImageEnhance.Contrast(cropped).enhance(1.5)
+        cropped = ImageEnhance.Color(cropped).enhance(SATURATION_BOOST)
+        cropped = ImageEnhance.Contrast(cropped).enhance(CONTRAST_BOOST)
 
         cropped.save(out_path)
         print(f"  Saved to {out_path}")
 
 
 if __name__ == "__main__":
-    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-    process_images(
-        source_dir=os.path.join(SCRIPT_DIR, "images"),
-        output_dir=os.path.join(SCRIPT_DIR, "preview"),
-    )
+    process_images(source_dir=Path("input_images"), output_dir=Path("images"))
