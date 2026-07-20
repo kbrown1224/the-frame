@@ -1,0 +1,16 @@
+[Unit]
+Description=E-ink photo frame
+After=multi-user.target
+
+[Service]
+Type=simple
+User=frame
+WorkingDirectory=/home/frame/app
+ExecStart=/home/frame/app/.venv/bin/frame
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
